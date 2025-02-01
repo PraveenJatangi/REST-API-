@@ -27,7 +27,7 @@ app.get('/api/users/:id',(req,res)=>{
     if (!users || users.length === 0) {
         return res.json({message:"no user found"});
     }
-    
+
       const id= Number(req.params.id);
       const user= users.find(user=>user.id===id);
       if (!user) {
@@ -52,9 +52,31 @@ fs.writeFile('./mock-data.json', JSON.stringify(users), (error, data)=>{
 
 app.patch('/api/users/:id',(req,res)=>{
   
-    //edit the content
+   
 
     return res.json({status:"Pending"})
+})
+
+app.put('/api/users/:id',(req,res)=>{
+
+    const id =Number(req.params.id);
+    const userData= req.body;
+
+    const userIndex= users.findIndex(user=>user.id===id);
+
+    if(userIndex===-1){
+        return res.status(404).json({message:"user not found"})
+    }
+    users[userIndex]={...users[userIndex],...userData};
+    
+    fs.writeFile('./mock-data.json', JSON.stringify(users), (error, data)=>{
+        if(error){
+            return res.json({message:"failed to update"})
+        } 
+        return res.json({message:"successfully updated user"})
+    })
+    
+
 })
 
 app.delete('/api/users/:id',(req,res)=>{
