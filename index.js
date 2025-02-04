@@ -6,7 +6,8 @@ const PORT = 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-
+dfgad
+app.
 
 app.get('/api/users',(req,res)=>{
     res.json(users);
